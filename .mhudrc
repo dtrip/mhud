@@ -1,0 +1,4 @@
+[DEFAULT]
+
+#refresh rate in seconds
+refresh = 1
