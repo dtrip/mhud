@@ -5,58 +5,59 @@ import sys
 import os
 import time
 import configparser
+import traceback
 import lupa
 from lupa import LuaRuntime
 
-mouse = Controller()
-px, py = (0,0)
+# mouse = Controller()
 
 
 class mhud:
 
-    args = None
-    lua = LuaRuntime(unpack_returned_tuples=False)
+    #  args = None
+    lua = LuaRuntime(unpack_returned_tuples=True)
     mouse = Controller()
     config = configparser.ConfigParser()
+    px, py = (0,0)
 
     def __init__(self):
-        config.sections()
-        config.read('.mhudrc')
+        self.config.sections()
+        self.config.read('.mhudrc')
 
     def run(self):
 
-        px, py = (0,0)
+        self.px, self.py = (0,0)
         try:
 
-            lua = self.getLua();
+            hud = self.lua.execute(self.getLua())
 
             while True:
-                x, y = mouse.position
-                if (x != px or y != py):
+                x, y = self.mouse.position
+                if (x != self.px or y != self.py):
+                    hud(x,y)
                     print("X:%s Y: %s" % (x,y))
 
                 time.sleep(0.1)
-                px = x
-                py = y
+                self.px = x
+                self.py = y
         except KeyboardInterrupt:
             print("SIGINT Caught")
             sys.exit()
         except Exception as e:
+            traceback.print_exc()
             print("ERROR: %s" % e)
             sys.exit()
 
     def getLua(self):
-        
-        lua = None
+        luacode = None
 
-        if (os.stat("hud.lua").st_size == 0):
-            raise Exception("Lua code is empty!")
+        if (os.stat(self.config['DEFAULT']['luafile']).st_size == 0):
+            raise Exception("Lua file is empty:" % (self.config['DEFAULT']['luafile']))
 
-        with open("hud.lua") as fh:
-            lua = fh.read().replace('\n', '')
+        with open(self.config['DEFAULT']['luafile']) as fh:
+            luacode = fh.read().replace('\n', '')
 
-
-        return lua
+        return luacode
 
         
 

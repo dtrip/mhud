@@ -4,4 +4,4 @@
 refresh = 1
 
 # file containing lua code
-luafile = "hud.lua"
+luafile = hud.lua
