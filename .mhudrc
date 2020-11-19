@@ -1,4 +1,7 @@
 [DEFAULT]
 
-#refresh rate in seconds
+# refresh rate in seconds
 refresh = 1
+
+# file containing lua code
+luafile = "hud.lua"
