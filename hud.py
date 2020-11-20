@@ -4,7 +4,8 @@ from gi.repository import Gtk, Gdk
 
 class HUD(Gtk.Window):
 
-    surface = cairo.ImageSurface
+    x, y = 256, 256
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, self.x, self.y)
     cr = cairo.Context(self.surface)
 
     def init(self):
