@@ -6,8 +6,10 @@ import os
 import time
 import configparser
 import traceback
-import lupa
-from lupa import LuaRuntime
+# import lupa
+# from lupa import LuaRuntime
+
+import hud
 
 # mouse = Controller()
 
@@ -15,7 +17,7 @@ from lupa import LuaRuntime
 class mhud:
 
     #  args = None
-    lua = LuaRuntime(unpack_returned_tuples=True)
+    # lua = LuaRuntime(unpack_returned_tuples=True)
     mouse = Controller()
     config = configparser.ConfigParser()
     px, py = (0,0)
@@ -29,12 +31,12 @@ class mhud:
         self.px, self.py = (0,0)
         try:
 
-            hud = self.lua.execute(self.getLua())
+            # hud = self.lua.execute(self.getLua())
 
             while True:
                 x, y = self.mouse.position
                 if (x != self.px or y != self.py):
-                    hud(x,y)
+                    # hud(x,y)
                     print("X:%s Y: %s" % (x,y))
 
                 time.sleep(0.1)
